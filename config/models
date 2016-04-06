@@ -1,0 +1,8 @@
+User
+    ident Text
+    name Text
+    email Text
+    accessToken Text
+    UserByIdent ident
+    UserByAccessToken accessToken
+    deriving Eq Show Typeable

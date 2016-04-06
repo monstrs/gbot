@@ -1,0 +1,4 @@
+/api/auth   AuthR   Auth   getAuth
+
+/api/users/me UsersMeR GET
+/api/users/token UsersTokenR GET

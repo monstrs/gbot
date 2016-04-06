@@ -1,0 +1,44 @@
+version: "2"
+
+services:
+  ide:
+    image: monstrs/cloud9
+    volumes:
+      - ./:/workspace
+    ports:
+      - "8484:80"
+
+  mongo:
+    image: mongo
+    network_mode: host
+    ports:
+      - "27017:27017"
+
+  repl:
+    image: haskell
+    stdin_open: true
+    network_mode: host
+    working_dir: /workspace
+    environment:
+      STACK_IN_CONTAINER: 1
+      GITHUB_CLIENT_ID: ${GBOT_GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GBOT_GITHUB_CLIENT_SECRET}
+    volumes:
+      - ./:/workspace
+      - ./.stack:/root/.stack
+    command: stack exec cabal repl
+
+  dev:
+    image: haskell
+    stdin_open: true
+    network_mode: host
+    working_dir: /workspace
+    environment:
+      STACK_IN_CONTAINER: 1
+      GITHUB_CLIENT_ID: ${GBOT_GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GBOT_GITHUB_CLIENT_SECRET}
+    volumes:
+      - ./:/workspace
+      - ./.stack:/root/.stack
+    ports:
+    - "3000:3000"
